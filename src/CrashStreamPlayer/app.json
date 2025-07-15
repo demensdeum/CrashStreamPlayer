@@ -3,13 +3,14 @@
     "name": "CrashStreamPlayer",
     "slug": "CrashStreamPlayer",
     "version": "1.0.0",
-    "orientation": "portrait,landscape",
+    "orientation": "default",
     "icon": "./assets/images/icon.png",
     "scheme": "crashstreamplayer",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "requireFullScreen": true
     },
     "android": {
       "adaptiveIcon": {
@@ -25,6 +26,12 @@
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
+      [
+        "expo-screen-orientation",
+        {
+          "initialOrientation": "DEFAULT"
+        }
+      ],
       "expo-router",
       [
         "expo-splash-screen",

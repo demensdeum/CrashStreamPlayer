@@ -5,29 +5,46 @@ import Video from 'react-native-video';
 
 export default function HomeScreen() {
 
+    const [currentTime, setCurrentTime] = useState(0);
     const [videoKey, setVideoKey] = useState(0);
+    const [paused, setPaused] = useState(false);
 
     const handleError = (error) => {
-        console.error("Video playback error:", error); // Log the error for debugging
-        setTimeout(() => {
-            setVideoKey(prevKey => prevKey + 1);
-        }, 300);
+        console.log("Video playback error:", error);
+        console.log("Restaring")
+        const timer = setTimeout(() => {
+            setPaused(false);
+        }, 1000);
+    };
+
+    const handlePlaybackStateChange = (data: OnPlaybackStateChangedData) => {
+        console.log('Playback state changed:', data);
+
+        if (data.isPlaying) {
+            console.log("playing")
+        } else {
+            console.log("NOT playing -> restaring")
+            const timer = setTimeout(() => {
+            setPaused(false);
+            }, 1000);
+        }
     };
 
     return (
         <View style={styles.container}>
         <Video
-        key={videoKey}
         source={{
             uri: 'http://172.20.10.14:9090/vlc',
-            minLoadRetryCount: 5
+            minLoadRetryCount: 10
         }}
         style={styles.fullscreenVideo}
         disableDisconnectError
         controls
-        autoplay
+        //autoplay
+        onPlaybackStateChanged={handlePlaybackStateChange}
         onError={handleError}
         hideShutterView={true}
+        paused={paused}
         />
         </View>
     );
