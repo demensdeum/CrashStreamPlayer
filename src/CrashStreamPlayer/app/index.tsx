@@ -5,13 +5,14 @@ import Video from 'react-native-video';
 
 export default function HomeScreen() {
 
+    const [videoUri, setVideoUri] = useState('http://172.20.10.14:9090/vlc');
     const [currentTime, setCurrentTime] = useState(0);
     const [videoKey, setVideoKey] = useState(0);
     const [paused, setPaused] = useState(false);
 
     const handleError = (error) => {
         console.log("Video playback error:", error);
-        console.log("Restaring")
+        console.log("Restarting")
         const timer = setTimeout(() => {
             setPaused(false);
         }, 1000);
@@ -23,10 +24,17 @@ export default function HomeScreen() {
         if (data.isPlaying) {
             console.log("playing")
         } else {
-            console.log("NOT playing -> restaring")
-            const timer = setTimeout(() => {
-            setPaused(false);
+            console.log("NOT playing -> restarting")
+
+            setTimeout(() => {
+                setVideoUri('https://www.w3schools.com/html/mov_bbb.mp4')
+                setPaused(false);
             }, 1000);
+
+            setTimeout(() => {
+                setVideoUri('http://172.20.10.14:9090/vlc')
+                setPaused(false);
+            }, 2000);
         }
     };
 
@@ -34,7 +42,7 @@ export default function HomeScreen() {
         <View style={styles.container}>
         <Video
         source={{
-            uri: 'http://172.20.10.14:9090/vlc',
+            uri: videoUri,
             minLoadRetryCount: 10
         }}
         style={styles.fullscreenVideo}
