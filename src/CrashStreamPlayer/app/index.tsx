@@ -13,9 +13,17 @@ export default function HomeScreen() {
     const handleError = (error) => {
         console.log("Video playback error:", error);
         console.log("Restarting")
-        const timer = setTimeout(() => {
+
+        setTimeout(() => {
+            setVideoUri('https://www.w3schools.com/html/mov_bbb.mp4')
             setPaused(false);
         }, 1000);
+
+        setTimeout(() => {
+            setVideoUri('http://172.20.10.14:9090/vlc')
+            setPaused(false);
+        }, 2000);
+
     };
 
     const handlePlaybackStateChange = (data: OnPlaybackStateChangedData) => {
